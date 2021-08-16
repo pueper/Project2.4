@@ -1,0 +1,14 @@
+body { width:90vw; height:90vh; padding:0; margin:0; font-family:Skia,Verdana,sans-serif; text-align:center; } 
+  app-board { table-layout:fixed;   margin:0 auto; }
+
+  app-sidebar { position:fixed; right:4vw; top:10vw;  width: 25vw; height:70vh; }
+  app-sidebar { vertical-align:top; text-align:left; padding:1%; }
+
+  @media only screen and (orientation:landscape) {
+    app-board { width:80vh; height:80vh; border-spacing:1vh;}
+  }
+
+
+  @media only screen and (orientation:portrait) {
+    app-board { width:70vw; height:70vw; border-spacing:1vw;}
+  }

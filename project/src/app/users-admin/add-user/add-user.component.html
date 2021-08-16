@@ -1,0 +1,10 @@
+<h3>Add a user</h3>
+
+<div>
+  <label for="name">User name: </label>
+  <input id="name" [(ngModel)]="name" placeholder="name">
+  <label for="age">User age: </label>
+  <input id="age" [(ngModel)]="age" placeholder="18">
+</div>
+<button (click)="save()">opslaan</button>
+<div *ngIf="created">user with id {{user.id}} created</div> 

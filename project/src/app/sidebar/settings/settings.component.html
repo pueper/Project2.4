@@ -1,0 +1,10 @@
+    <b>Karakter op kaarten:</b> 
+      <select [(ngModel)]="achterkant" (change)="setAchterkant()" >
+        <option [value] ="teken" *ngFor="let teken of achterkantOpties">{{teken}}</option>
+      </select>
+    <br>
+    <b>Afmeting bord:</b>
+      <select [(ngModel)]="size">
+        <option [ngValue]="maat" *ngFor= "let maat of sizeOpties">{{maat}}</option>
+    </select><br/><br/>
+    <button id="opnieuw" (click)="startGame.emit(size)">Nieuw Spel</button>

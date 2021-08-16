@@ -1,0 +1,11 @@
+  #myTime {
+  position: relative;
+  width: 200px;
+  height: 30px;
+  background-color: #ddd;
+	}
+
+	#timeLeft {
+	  height: 20px;
+      background-color: #4CAF50;
+    }

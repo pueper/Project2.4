@@ -1,0 +1,4 @@
+<div appCardlayout [gevonden]="(found)" [geselecteerd]="(selected)" [size]="(size)"  (click)="onSelect()">
+        <span [hidden]="!(selected) && !(found)">{{karakter}}</span>
+        <span [hidden]="(selected) || (found)">{{achterkant}}</span>
+    </div>

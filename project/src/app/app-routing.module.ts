@@ -1,0 +1,31 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { PlayGameComponent } from './play-game/play-game.component';
+import { UsersAdminComponent } from './users-admin/users-admin.component';
+import { GamesComponent } from './users-admin/games/games.component';
+import { TopscoresComponent } from './users-admin/topscores/topscores.component';
+import { AddUserComponent } from './users-admin/add-user/add-user.component';
+import { LoginComponent } from './login/login.component';
+
+const appRoutes: Routes = [
+  { path: 'playgame', component: PlayGameComponent },
+  { path: 'admin', component: UsersAdminComponent },
+  { path: 'games', component: GamesComponent },
+  { path: 'adduser', component: AddUserComponent },
+  { path: 'topscores/games/:id', component: TopscoresComponent },
+  { path: 'login', component: LoginComponent } 
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    )
+  ],
+  exports: [
+    RouterModule
+  ]
+})
+export class AppRoutingModule {}

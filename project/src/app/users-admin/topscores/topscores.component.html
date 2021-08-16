@@ -1,0 +1,8 @@
+<h3>Topscores voor deze game</h3>
+<ul class="topscores">
+  <li *ngFor="let topscore of topscores">
+    <a>
+	  <span class="badge">{{topscore.user.name}}</span><span class="badge">{{topscore.game.name}}</span> {{topscore.score}}
+    </a>
+  </li>
+</ul>

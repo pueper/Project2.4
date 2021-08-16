@@ -1,0 +1,8 @@
+<h3>Games</h3>
+<ul class="games">
+  <li *ngFor="let game of games">
+    <a routerLink="/topscores/games/{{game.id}}">
+      <span class="badge">{{game.id}}</span> {{game.name}}
+    </a>
+  </li>
+</ul>
