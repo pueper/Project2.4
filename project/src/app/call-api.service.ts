@@ -27,14 +27,19 @@ export class CallApiService {
 		return this.http.get<Topscore[]>(url);
 	}
 	
-	saveUser(name: string, age: number): void  {
+	saveUser(name: string, password:string, age: number): void  {
 		const url = this.gameServerUrl+ '/user';
-		this.http.post<any>(url, { name: name, age: age }).subscribe(data => {
-        this.userCreated.next(data);
+		this.http.post<any>(url, { user_name: name, password: password, user_age: age }).subscribe(data => {
+			this.userCreated.next(data);
     })
 	}
 	
 	getUserCreated(): Observable<User> {
         return this.userCreated.asObservable();
     }
+
+	login(usr:string, pwd:string):void {
+		const url = this.gameServerUrl+ '/login';
+		this.http.post<any>(url, {usr: usr, pwd: pwd}).subscribe();
+	}
 }

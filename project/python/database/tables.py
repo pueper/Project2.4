@@ -16,6 +16,7 @@ class User(DBModel):
 
     id = Column(Integer, autoincrement=True, nullable=False, primary_key=True)
     user_name = Column(VARCHAR(45), nullable=False, unique=True)
+    password = Column(VARCHAR(45), nullable=False)
     user_age = Column(Integer, default=None)
     scores = relationship("TopScore")
     games = relationship("Game", secondary="user_game")
@@ -26,6 +27,7 @@ class User(DBModel):
             return dict(
                 id=self.id,
                 name=self.user_name,
+                password=self.password,
                 age=self.user_age,
                 games=[game.to_dict(False) for game in self.games],
                 scores=[ts.to_dict(False) for ts in self.scores]
@@ -34,6 +36,7 @@ class User(DBModel):
             return dict(
                 id=self.id,
                 name=self.user_name,
+                password=self.password,
                 age=self.user_age,
             )
             

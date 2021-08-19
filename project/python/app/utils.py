@@ -1,5 +1,7 @@
 from functools import partial
 from flask import json, jsonify
+from app.obj_utils import get_objs
+from database.tables import User
 
 from app.authorization import AuthBlueprint
 
@@ -21,3 +23,9 @@ def check_request_data(data, items):
                 message =  jsonify({'error':'no ' + item + ' provided'})
                 response_code = 400
     return message, response_code
+
+def check_login_credentials(usr, pwd):
+    for user in get_objs(User):
+        if(user['name'] == usr and user['password'] == pwd):
+             return True
+    return False

@@ -10,6 +10,7 @@ def user_data(app):
         User(
             id=1,
             user_name="Pietje Puk",
+            password="pukkie",
             user_age=25
         )
     )
@@ -17,6 +18,7 @@ def user_data(app):
         User(
             id=2,
             user_name="Jan Janssen",
+            password="janssennie",
             user_age=17,
         )
     )

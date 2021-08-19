@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CallApiService } from '../call-api.service'
+
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private callApiService: CallApiService) { }
+
+  name:string
+  password:string
 
   ngOnInit(): void {
   }
 
+  postLogin(): void {
+    this.callApiService.login(this.name, this.password);
+  }
 }

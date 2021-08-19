@@ -10,6 +10,7 @@ import { CallApiService } from '../../call-api.service'
 export class AddUserComponent implements OnInit {
 
   name:string
+  password:string
   age:number
   user:User
   created=false
@@ -21,6 +22,6 @@ export class AddUserComponent implements OnInit {
   }
 
   save():void {
-  	this.callApiService.saveUser(this.name, this.age);
+  	this.callApiService.saveUser(this.name, this.password, this.age);
   }
 }
