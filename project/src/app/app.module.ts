@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { GameinfoModule } from './gameinfo/gameinfo.module';
 import { GamesComponent } from './users-admin/games/games.component';
 import { AddUserComponent } from './users-admin/add-user/add-user.component';
 import { LoginComponent } from './login/login.component';
+import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { LoginComponent } from './login/login.component';
     BoardModule,
     GameinfoModule
   ],
-  providers: [],
+  providers: [ {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptorInterceptor, multi:true} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

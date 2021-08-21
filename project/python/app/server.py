@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, current_app
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token, create_refresh_token,
     get_jwt_identity, get_jwt
 )
 from datetime import datetime, timedelta, timezone
+import jwt
 
 from werkzeug.wrappers import response
 import json
@@ -18,6 +19,7 @@ from database.tables import User, Game, TopScore, UserGame
 memory_api, get, post = init_routing_func('memory_api', '/wmsdemo/')
 
 @get('/games')
+@jwt_required()
 def getGames():
     games=get_objs(Game, relations=True)
     return jsonify(games),200
@@ -28,11 +30,13 @@ def getUsers():
     return jsonify(users),200
 
 @get('/topscores')
+@jwt_required()
 def getTopscores():
     topscores=get_objs(TopScore, relations=True)
     return jsonify(topscores)
 
 @get('/topscores/game/<int:game_id>')
+@jwt_required()
 def getTopscoresGame(game_id):
     topscores=get_objs_with_filter(TopScore, relations=True, game_id=game_id)
     return jsonify(topscores)
@@ -48,12 +52,13 @@ def saveUser():
 
 @post('/login')
 def login():
-    usr = request.json['usr']
-    pwd = request.json['pwd']
-    if(check_login_credentials(usr, pwd)):
-        token = create_access_token(identity=usr)
-        response = jsonify({'succes':'je bent ingelogd'})
-        set_access_cookies(response, token)
+    usr = request.json['user']
+    pwd = request.json['password']
+    usr_id = check_login_credentials(usr, pwd)
+    if(usr_id > -1):
+        token = create_access_token(identity=usr_id)
+        response = jsonify({'user_id':usr_id, 'expiresIn':current_app.config['JWT_ACCESS_TOKEN_EXPIRES'].seconds, 'token': token})
+        # set_access_cookies(response, token)
 
         return response, 200
     else:

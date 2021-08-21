@@ -50,9 +50,7 @@ class Config:
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=1)
 
     # ander JWT spul
-    JWT_TOKEN_LOCATION = ['cookies']
+    JWT_TOKEN_LOCATION = ['headers']
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['acces']
-    JWT_ACCESS_COOKIE_PATH = '/'
-    JWT_COOKIE_SECURE = False
     JWT_EXPIRATION_DELTA = timedelta(seconds=3600)

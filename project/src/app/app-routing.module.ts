@@ -8,12 +8,14 @@ import { TopscoresComponent } from './users-admin/topscores/topscores.component'
 import { AddUserComponent } from './users-admin/add-user/add-user.component';
 import { LoginComponent } from './login/login.component';
 
+import { AuthenticationGuard } from './authentication.guard';
+
 const appRoutes: Routes = [
-  { path: 'playgame', component: PlayGameComponent },
+  { path: 'playgame', component: PlayGameComponent, canActivate:[AuthenticationGuard] },
   { path: 'admin', component: UsersAdminComponent },
-  { path: 'games', component: GamesComponent },
+  { path: 'games', component: GamesComponent, canActivate:[AuthenticationGuard] },
   { path: 'adduser', component: AddUserComponent },
-  { path: 'topscores/games/:id', component: TopscoresComponent },
+  { path: 'topscores/games/:id', component: TopscoresComponent, canActivate:[AuthenticationGuard] },
   { path: 'login', component: LoginComponent } 
 ];
 

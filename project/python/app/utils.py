@@ -27,5 +27,5 @@ def check_request_data(data, items):
 def check_login_credentials(usr, pwd):
     for user in get_objs(User):
         if(user['name'] == usr and user['password'] == pwd):
-             return True
-    return False
+             return user['id']
+    return -1
