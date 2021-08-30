@@ -41,6 +41,16 @@ def getTopscoresGame(game_id):
     topscores=get_objs_with_filter(TopScore, relations=True, game_id=game_id)
     return jsonify(topscores)
 
+@post('/topscore')
+@jwt_required()
+def postTopScore():
+    data = request.json
+    message, response_code = check_request_data(data, ["game_id", "user_id", "score"])
+    if (response_code == 200):
+        newTopscore = create_obj(TopScore, data)
+        message = jsonify(newTopscore.to_dict())
+    return message, response_code
+
 @post('/user')
 def saveUser():
     data = request.json

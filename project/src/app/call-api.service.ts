@@ -28,6 +28,12 @@ export class CallApiService {
 		const url = this.gameServerUrl+ '/topscores/game/' + id;
 		return this.http.get<Topscore[]>(url);
 	}
+
+	postTopscore(gameId: number, score: number): void {
+		const url = this.gameServerUrl+ '/topscore';
+		const userId: number = this.authService.getUserid();
+		this.http.post<any>(url, { game_id: gameId, user_id: userId, score: score}).subscribe(data => {});
+	}
 	
 	saveUser(name: string, password:string, age: number): void  {
 		const url = this.gameServerUrl+ '/user';

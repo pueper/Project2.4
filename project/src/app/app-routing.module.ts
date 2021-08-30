@@ -11,7 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationGuard } from './authentication.guard';
 
 const appRoutes: Routes = [
-  { path: 'playgame', component: PlayGameComponent, canActivate:[AuthenticationGuard] },
+  { path: 'playgame', component: PlayGameComponent },
   { path: 'admin', component: UsersAdminComponent },
   { path: 'games', component: GamesComponent, canActivate:[AuthenticationGuard] },
   { path: 'adduser', component: AddUserComponent },

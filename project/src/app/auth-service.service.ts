@@ -35,6 +35,10 @@ export class AuthService {
         return !this.isLoggedIn();
     }
 
+    getUserid(): number {
+        return parseInt(localStorage.getItem('user_id'));
+    }
+
     getExpiration() {
         const expiration = localStorage.getItem("expires_at");
         const expiresAt = JSON.parse(expiration);

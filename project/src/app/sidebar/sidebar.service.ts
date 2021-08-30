@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { APP_ID, Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { CallApiService } from '../call-api.service';
 
 export class Topper {
     name: string;
@@ -24,15 +25,28 @@ export class SidebarService {
     toppersChange: Subject<Array<Topper>> = new Subject<Array<Topper>>();
     gemiddeldeChange: Subject<number> = new Subject<number>();
     kleurChange: Subject<Array<string>> = new Subject<Array<string>>();
+    gameID: number;
 
-    constructor() {
-        this.topper = new Topper('Barack Obama', 100);
-        this.topScores[0] = this.topper;
+    constructor(private callapiservice: CallApiService) {
+        // this.topper = new Topper('Barack Obama', 100);
+        // this.topScores[0] = this.topper;
+        this.gameID = 1;
         this.toppersChange.next(this.topScores);
+        this.refreshScores();
         this.aantalTijden = 0;
         this.totaalTijd = 0;
         this.gemiddelde = 0;
         this.kleuren = [ '#ff0000\',\'#00ff00\',\'#ffff00'];
+    }
+    refreshScores() {
+        this.callapiservice.getTopscoresGame(this.gameID).subscribe(scores => { 
+            let i = 0;
+            for(i; i<scores.length;i++) {
+                if(scores[i]['game']['id'] == this.gameID) {
+                    this.topScores[i] = new Topper(scores[i]['user']['name'], scores[i]['score']);
+                }
+            }
+            })
     }
     getToppers(): Observable<Array<Topper>> {
         return this.toppersChange.asObservable();
@@ -56,34 +70,37 @@ export class SidebarService {
     fetchKleuren() {
         this.kleurChange.next(this.kleuren);
     }
-    registreerScore(speelTijd: number) {
+    registreerScore(speelTijd: number, gameID: number) {
         this.totaalTijd += speelTijd;
         this.aantalTijden++;
         this.gemiddelde = Math.round(this.totaalTijd / this.aantalTijden);
         if (this.topScores.length < 4) {
-            this.updateTopScores(speelTijd);
+            this.updateTopScores(speelTijd, gameID);
         } else {
             if (speelTijd <= this.topScores[this.topScores.length - 1].time) {
-                this.updateTopScores(speelTijd);
+                this.updateTopScores(speelTijd, gameID);
             }
         }
     }
-    updateTopScores(speelTijd: number) {
-        const naam: string = prompt('Gefeliciteerd, je staat in de top vijf! Please enter your name', 'Harry Potter');
-        let nieuweTopper = new Topper(naam, speelTijd);
-        let idx = 0;
-        for (const topscore of this.topScores) {
-            if (speelTijd <= topscore.time) {
-                const thisTopper = this.topScores[idx];
-                this.topScores[idx] = nieuweTopper;
-                nieuweTopper = thisTopper;
-                speelTijd = topscore.time;
-            }
-            idx++;
-        }
-        if (idx <= 4) {
-            this.topScores[idx] = nieuweTopper;
-        }
+    updateTopScores(speelTijd: number, gameID: number) {
+        this.gameID = gameID;
+        this.callapiservice.postTopscore(this.gameID, speelTijd);
+        this.refreshScores();
+        // const naam: string = prompt('Gefeliciteerd, je staat in de top vijf! Please enter your name', 'Harry Potter');
+        // let nieuweTopper = new Topper(naam, speelTijd);
+        // let idx = 0;
+        // for (const topscore of this.topScores) {
+        //     if (speelTijd <= topscore.time) {
+        //         const thisTopper = this.topScores[idx];
+        //         this.topScores[idx] = nieuweTopper;
+        //         nieuweTopper = thisTopper;
+        //         speelTijd = topscore.time;
+        //     }
+        //     idx++;
+        // }
+        // if (idx <= 4) {
+        //     this.topScores[idx] = nieuweTopper;
+        // }
         this.toppersChange.next(this.topScores);
         this.gemiddeldeChange.next(this.gemiddelde);
     }

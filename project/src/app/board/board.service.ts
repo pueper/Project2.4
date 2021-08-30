@@ -19,6 +19,7 @@ export class BoardService {
     gevondenChange: Subject<number> = new Subject<number>();
     achterkantChange: Subject<string> = new Subject<string>();
     showTimeChange: Subject<boolean> = new Subject<boolean>();
+    gameID: number;
 
     constructor(private tijdService: TijdService, private sidebarService: SidebarService) {
        // this.initVars();
@@ -39,7 +40,7 @@ export class BoardService {
     getShowTime(): Observable<boolean> {
         return this.showTimeChange.asObservable();
     }
-    initVars(newSize: number) {
+    initVars(newSize: number, gameID: number) {
         this.size = newSize;
         this.firstCard = null;
         this.secondCard = null;
@@ -50,6 +51,7 @@ export class BoardService {
         this.getLetter = this.nextLetter();
         this.tijdService.initTijd();
         this.showTimeChange.next(false);
+        this.gameID = gameID;
     }
     nextLetter(): any {
         let letterArray = 'AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ'.substring(0, this.size * this.size).split('');
@@ -123,6 +125,6 @@ export class BoardService {
     }
     endGame() {
         let score:number = this.tijdService.stopTijd();
-        this.sidebarService.registreerScore(score);
+        this.sidebarService.registreerScore(score, this.gameID);
     }
 }
