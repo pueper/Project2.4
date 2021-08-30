@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-board',
@@ -12,7 +12,7 @@ export class BoardComponent implements OnInit {
     constructor() { }
     @Input()
     set size(size: number) {
-      this.numbers = Array(size).fill(1);
+      this.numbers = Array(size).fill(size);
       this._size = size;
     }
     get size(): number {

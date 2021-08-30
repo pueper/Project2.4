@@ -12,8 +12,8 @@ import json
 from flask_jwt_extended.utils import set_access_cookies
 
 from app import app
-from app.utils import init_routing_func, check_request_data, check_login_credentials
-from app.obj_utils import get_objs, get_objs_with_filter, create_obj
+from app.utils import init_routing_func, check_request_data, check_login_credentials, sort_scores
+from app.obj_utils import get_objs, get_objs_with_filter, create_obj, delete_obj
 from database.tables import User, Game, TopScore, UserGame
 
 memory_api, get, post = init_routing_func('memory_api', '/wmsdemo/')
@@ -39,7 +39,11 @@ def getTopscores():
 @jwt_required()
 def getTopscoresGame(game_id):
     topscores=get_objs_with_filter(TopScore, relations=True, game_id=game_id)
-    return jsonify(topscores)
+    toppers, rest = sort_scores(topscores)
+    if(rest):
+        for score in rest:
+            delete_obj(TopScore, score['id'])
+    return jsonify(toppers)
 
 @post('/topscore')
 @jwt_required()

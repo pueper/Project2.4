@@ -10,9 +10,19 @@ export class PlayGameComponent {
     size = 6;
     timeID: any;
     gameID: number = 1;  // dit is placeholder, moet eigenlijk achterhaald worden welk spel gespeeld word
+    sidebar: boolean;
 
     constructor(private boardService: BoardService) {
+        this.sidebar = false;
         this.newGame(this.size);
+    }
+
+    toggleSidebar() {
+        if(this.sidebar) {
+            this.sidebar = false;
+        } else {
+            this.sidebar = true;
+        }
     }
 
     newGame(newSize: number) {

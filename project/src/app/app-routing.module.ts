@@ -9,6 +9,7 @@ import { AddUserComponent } from './users-admin/add-user/add-user.component';
 import { LoginComponent } from './login/login.component';
 
 import { AuthenticationGuard } from './authentication.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   { path: 'playgame', component: PlayGameComponent },
@@ -16,7 +17,9 @@ const appRoutes: Routes = [
   { path: 'games', component: GamesComponent, canActivate:[AuthenticationGuard] },
   { path: 'adduser', component: AddUserComponent },
   { path: 'topscores/games/:id', component: TopscoresComponent, canActivate:[AuthenticationGuard] },
-  { path: 'login', component: LoginComponent } 
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/admin', pathMatch: 'full'},
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

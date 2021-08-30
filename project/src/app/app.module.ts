@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { environment } from '../environments/environment';
     TopscoresComponent,
     GamesComponent,
     AddUserComponent,
-    LoginComponent
+    LoginComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

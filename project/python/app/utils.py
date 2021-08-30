@@ -1,7 +1,7 @@
 from functools import partial
 from flask import json, jsonify
 from app.obj_utils import get_objs
-from database.tables import User
+from database.tables import User, TopScore
 
 from app.authorization import AuthBlueprint
 
@@ -29,3 +29,15 @@ def check_login_credentials(usr, pwd):
         if(user['name'] == usr and user['password'] == pwd):
              return user['id']
     return -1
+
+def score_sorter(topscore):
+    return topscore['score']
+
+def sort_scores(topscores):
+    topscores.sort(key=score_sorter)
+    if(len(topscores)>5):
+        topscoreLijst = topscores[:5]
+        andereScores = topscores[5:]
+        return topscoreLijst, andereScores
+    return topscores, False
+

@@ -28,8 +28,6 @@ export class SidebarService {
     gameID: number;
 
     constructor(private callapiservice: CallApiService) {
-        // this.topper = new Topper('Barack Obama', 100);
-        // this.topScores[0] = this.topper;
         this.gameID = 1;
         this.toppersChange.next(this.topScores);
         this.refreshScores();
@@ -41,11 +39,16 @@ export class SidebarService {
     refreshScores() {
         this.callapiservice.getTopscoresGame(this.gameID).subscribe(scores => { 
             let i = 0;
+            this.totaalTijd = 0;
+            this.aantalTijden = 0;
             for(i; i<scores.length;i++) {
                 if(scores[i]['game']['id'] == this.gameID) {
                     this.topScores[i] = new Topper(scores[i]['user']['name'], scores[i]['score']);
+                    this.totaalTijd += this.topScores[i]['time'];
+                    this.aantalTijden++;
                 }
             }
+            this.gemiddelde = Math.round(this.totaalTijd / this.aantalTijden);
             })
     }
     getToppers(): Observable<Array<Topper>> {
@@ -73,7 +76,6 @@ export class SidebarService {
     registreerScore(speelTijd: number, gameID: number) {
         this.totaalTijd += speelTijd;
         this.aantalTijden++;
-        this.gemiddelde = Math.round(this.totaalTijd / this.aantalTijden);
         if (this.topScores.length < 4) {
             this.updateTopScores(speelTijd, gameID);
         } else {
@@ -86,21 +88,6 @@ export class SidebarService {
         this.gameID = gameID;
         this.callapiservice.postTopscore(this.gameID, speelTijd);
         this.refreshScores();
-        // const naam: string = prompt('Gefeliciteerd, je staat in de top vijf! Please enter your name', 'Harry Potter');
-        // let nieuweTopper = new Topper(naam, speelTijd);
-        // let idx = 0;
-        // for (const topscore of this.topScores) {
-        //     if (speelTijd <= topscore.time) {
-        //         const thisTopper = this.topScores[idx];
-        //         this.topScores[idx] = nieuweTopper;
-        //         nieuweTopper = thisTopper;
-        //         speelTijd = topscore.time;
-        //     }
-        //     idx++;
-        // }
-        // if (idx <= 4) {
-        //     this.topScores[idx] = nieuweTopper;
-        // }
         this.toppersChange.next(this.topScores);
         this.gemiddeldeChange.next(this.gemiddelde);
     }

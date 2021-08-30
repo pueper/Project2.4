@@ -3,6 +3,7 @@ body { width:90vw; height:90vh; padding:0; margin:0; font-family:Skia,Verdana,sa
 
   app-sidebar { position:fixed; right:4vw; top:10vw;  width: 25vw; height:70vh; }
   app-sidebar { vertical-align:top; text-align:left; padding:1%; }
+  app-sidebar { background-color: white;}
 
   @media only screen and (orientation:landscape) {
     app-board { width:80vh; height:80vh; border-spacing:1vh;}

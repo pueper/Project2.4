@@ -1,3 +1,7 @@
-  <app-gameinfo></app-gameinfo>
+  <div>
+    <app-gameinfo></app-gameinfo>
+    <button (click)="toggleSidebar()">SideBar</button>
+  </div>
+  <br>
   <app-board [size]='size'></app-board>
-  <app-sidebar (startGame)="newGame($event)"></app-sidebar>
+  <app-sidebar *ngIf="sidebar" (startGame)="newGame($event)"></app-sidebar>
