@@ -9,7 +9,7 @@ import { AuthService } from './auth-service.service';
 
 export class CallApiService {
 
-	private gameServerUrl = 'http://localhost:8080/wmsdemo';
+	private gameServerUrl = 'http://localhost:8081/wmsdemo';
 	userCreated: Subject<User> = new Subject<User>();
 
 	httpOptions = {
