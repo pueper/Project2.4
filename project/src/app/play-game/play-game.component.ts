@@ -13,7 +13,7 @@ export class PlayGameComponent {
     sidebar: boolean;
 
     constructor(private boardService: BoardService) {
-        this.sidebar = false;
+        this.sidebar = true;
         this.newGame(this.size);
     }
 
